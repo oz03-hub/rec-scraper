@@ -22,6 +22,10 @@ These are open for customization for the developer, but as of now:
 
 Easy tmux: https://tmuxcheatsheet.com/
 
+To Run the flattener, very simple:
+1. Activate the environment again.
+2. Run `python flattener.py --rec_dir out --out_file my_ids.txt`, of course change rec_dir to the directory that saved your jsons, and out_file is the id file you want.
+
 # Notes
 You might notice some videos will keep failing even after many retries, there is a good chance those videos are removed from the website, the test.csv has an example `mDZFZ-IKZT4` id will keep failing, don't panic, other ids should be downloaded.
 
