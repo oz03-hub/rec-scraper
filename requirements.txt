@@ -18,3 +18,4 @@ sniffio
 tqdm
 typing_extensions
 tzdata
+ipykernel

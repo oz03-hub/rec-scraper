@@ -3,6 +3,8 @@ from collections import deque
 from innertube import InnerTube
 import pandas as pd
 from tqdm import tqdm
+import os
+from pathlib import Path
 
 # Remember to update innertube as said in README.md
 client = InnerTube("WEB")
@@ -63,11 +65,14 @@ def crawl(start_id: str, depth: int = 2):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", help="CSV for interested videos. Each row will result in a separate _rec file.")
+    ap.add_argument("--out_dir", help="Location to save rec-trees.", default="out/")
     ap.add_argument("--depth", type=int, default=3, help="Max depth for recommendation tree, will result in limit^depth points.")
     ap.add_argument("--max_retries", type=int, default=5, help="Number of times to retry recommendation scrape per video id.")
     # ^ For some reason I have not figured out yet, innertube sometimes does not reply with a result, so we try X times again to get a correct result
     # This might be a rate-limit thing, but unlikely
     args = ap.parse_args()
+
+    os.makedirs(args.out_dir, exist_ok=True)
 
     input_file = args.input
     depth = args.depth
@@ -79,7 +84,7 @@ if __name__ == "__main__":
 
     for id in ids:
         print(f"===> Crawling {id}.")
-        out_file = f"out/{id}_rec.json" # Hard-coded out/ if you really need to change it you can add as argument for flexibility
+        out_file = Path(args.out_dir) / f"{id}_rec.json"
 
         # This is the redo logic to combat innertube shenanigans I described
         retries = 0
